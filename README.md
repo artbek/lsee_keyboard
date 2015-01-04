@@ -1,8 +1,13 @@
 USB Keyboard Build
 ==================
 
-<img src="https://github.com/artbek/lsee_keyboard/blob/master/photos/final_product_top.jpg" />
-<img src="https://github.com/artbek/lsee_keyboard/blob/master/design_files/circuit_diagram__large.png" />
+<a href="http://lseeblog.co.uk/post/8">
+  <img src="https://github.com/artbek/lsee_keyboard/blob/master/photos/final_product_top.jpg" />
+</a>
+
+<a href="http://lseeblog.co.uk/post/7">
+  <img src="https://github.com/artbek/lsee_keyboard/blob/master/design_files/circuit_diagram__large.png" />
+</a>
 
 /design_files
 - CAD files and circuit diagram
