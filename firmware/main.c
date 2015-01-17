@@ -271,7 +271,44 @@ static void scanForPressedKeys(void)
 }
 
 
-/* MAIN */
+/* LAYOUT PROGRAMMING via USB */
+
+static uchar reportBuffer3[8];
+
+void usbFunctionWriteOut(uchar *data, uchar len)
+{
+	// OUT
+	if (data[0] == 0x0) {
+		codes[data[1]][data[2]][data[3]] = data[4];
+	}
+
+	// populate report buffer for IN
+	if (data[0] == 0x1) {
+		reportBuffer3[0] = data[0];
+		reportBuffer3[1] = data[1];
+		reportBuffer3[2] = data[2];
+		reportBuffer3[3] = data[3];
+		reportBuffer3[4] = codes[data[1]][data[2]][data[3]];
+	}
+}
+
+static void clearReport3(void)
+{
+	/*
+	 * Bytes meaning:
+	 * 0 - command byte (0 - OUT, 1 - populate report buffer for IN)
+	 * 1 - layer number
+	 * 2 - row number
+	 * 3 - column number
+	 * 4 - key code (only required for OUT)
+	 */
+
+	memset(reportBuffer3, 0, sizeof(reportBuffer3));
+}
+
+
+
+/*** MAIN ***/
 
 int __attribute__((noreturn)) main(void)
 {
@@ -288,6 +325,11 @@ int __attribute__((noreturn)) main(void)
 		if (usbInterruptIsReady()) {
 			usbSetInterrupt(reportBuffer, sizeof(reportBuffer));
 			clearReport();
+		}
+
+		if (usbInterruptIsReady3()) {
+			usbSetInterrupt3(reportBuffer3, sizeof(reportBuffer3));
+			clearReport3();
 		}
 	}
 }
