@@ -1,7 +1,8 @@
 /* KEYCODES */
 
-#define LAYER 0XFF // for internal layer switching (never sent to host)
-#define SLAYR 0XFE // LAYER + SFT_R
+#define LAY_B   0xFF // LAYER B
+#define SLAYR   0xFE // LAY_B + SFT_R
+#define LAY_C   0xFD // LAYER C
 
 #define KEY_A   0x04 // a and A
 #define KEY_B   0x05 // b and B
@@ -88,12 +89,12 @@
 #define ARR_D   0x51 // DownArrow
 #define ARR_U   0x52 // UpArrow
 
-#define CTL_L 0xE0 // LeftControl
-#define SFT_L 0xE1 // LeftShift
-#define ALT_L 0xE2 // LeftAlt
-#define GUI_L 0xE3 // Left GUI
-#define CTL_R 0xE4 // RightControl
-#define SFT_R 0xE5 // RightShift
-#define ALT_R 0xE6 // RightAlt
-#define GUI_R 0xE7 // Right GUI
+#define CTL_L   0xE0 // LeftControl
+#define SFT_L   0xE1 // LeftShift
+#define ALT_L   0xE2 // LeftAlt
+#define GUI_L   0xE3 // Left GUI
+#define CTL_R   0xE4 // RightControl
+#define SFT_R   0xE5 // RightShift
+#define ALT_R   0xE6 // RightAlt
+#define GUI_R   0xE7 // Right GUI
 

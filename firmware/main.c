@@ -58,7 +58,7 @@ PROGMEM const char usbHidReportDescriptor[USB_CFG_HID_REPORT_DESCRIPTOR_LENGTH] 
 };
 
 static uchar reportBuffer[8]; // buffer for HID reports
-static uchar tempReportBuffer[2][8]; // temp buffer copied to reportBuffer
+static uchar tempReportBuffer[NUMBER_OF_LAYERS][8]; // temp buffer copied to reportBuffer
 
 #define REPORT_POINTER_FIRST_INDEX 2
 #define REPORT_POINTER_LAST_INDEX 7
@@ -84,7 +84,8 @@ static uchar modifiers[256] = { 0 };
 
 #define IS_NORMAL_KEY    0b00000000
 #define IS_MODIFIER      0b00000001
-#define IS_LAYER_SWITCH  0b00000010
+#define IS_LAYER_B_SWITCH  0b00000010
+#define IS_LAYER_C_SWITCH  0b00000100
 
 void initFlags()
 {
@@ -98,8 +99,9 @@ void initFlags()
 	flags[ALT_R] = IS_MODIFIER;
 	flags[GUI_R] = IS_MODIFIER;
 
-	flags[LAYER] = IS_LAYER_SWITCH;
-	flags[SLAYR] = IS_LAYER_SWITCH | IS_MODIFIER;
+	flags[LAY_B] = IS_LAYER_B_SWITCH;
+	flags[SLAYR] = IS_LAYER_B_SWITCH | IS_MODIFIER;
+	flags[LAY_C] = IS_LAYER_C_SWITCH;
 
 
 	modifiers[CTL_L] = 0b00000001;
@@ -118,11 +120,12 @@ void initFlags()
 
 #define LAYER_A  0
 #define LAYER_B  1
+#define LAYER_C  2
 static uchar current_layer = LAYER_A;
 
 // Make sure the layer key is not released before normal key.
 // It makes the keyboard more forgiving.
-#define DEFAULT_LAYER_PERSISTENCE 3;
+#define DEFAULT_LAYER_PERSISTENCE 5;
 static char layer_persistence_timeout = DEFAULT_LAYER_PERSISTENCE;
 
 typedef enum {LEFT_HAND, RIGHT_HAND} hand_t;
@@ -169,7 +172,7 @@ static void clearReport(void)
 	 */
 
 	memset(reportBuffer, 0, sizeof(reportBuffer[0]) * 8);
-	memset(tempReportBuffer, 0, sizeof(tempReportBuffer[0][0]) * 2 * 8);
+	memset(tempReportBuffer, 0, sizeof(tempReportBuffer[0][0]) * NUMBER_OF_LAYERS * 8);
 
 	reportPointer = REPORT_POINTER_FIRST_INDEX;
 
@@ -213,19 +216,28 @@ void updateTempBuffers(int pin, hand_t hand, uchar row)
 	uchar col;
 	uchar keycode_a;
 	uchar keycode_b;
+	uchar keycode_c;
 
 	for (col = offset; col < (6 + offset); col++) {
 		if (~pin & (1 << col_pins[col])) {
 
 			keycode_a = codes[LAYER_A][row][col];
 			keycode_b = codes[LAYER_B][row][col];
+			keycode_c = codes[LAYER_C][row][col];
 
-			if (flags[keycode_a] & IS_LAYER_SWITCH) {
-				current_layer = LAYER_B;
+			if ((flags[keycode_a] & IS_LAYER_B_SWITCH) || (flags[keycode_a] & IS_LAYER_C_SWITCH)) {
+
+				if (flags[keycode_a] & IS_LAYER_B_SWITCH) {
+					current_layer = LAYER_B;
+				} else {
+					current_layer = LAYER_C;
+				}
+
 				layer_persistence_timeout = DEFAULT_LAYER_PERSISTENCE;
 				if (flags[keycode_a] & IS_MODIFIER) {
 					keycode_a = SFT_R;
 					keycode_b = SFT_R;
+					keycode_c = SFT_R;
 				} else {
 					continue; // layer key alone has no scan code to send
 				}
@@ -233,6 +245,7 @@ void updateTempBuffers(int pin, hand_t hand, uchar row)
 
 			tempReportBuffer[LAYER_A][reportPointer] = keycode_a;
 			tempReportBuffer[LAYER_B][reportPointer] = keycode_b;
+			tempReportBuffer[LAYER_C][reportPointer] = keycode_c;
 			increaseReportPointer();
 		}
 	}
