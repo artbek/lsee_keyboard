@@ -1,0 +1,23 @@
+{
+	"manifest_version": 2,
+	"minimum_chrome_version": "23",
+	"name": "Edit LSee Keyboard Layout",
+	"description": "Edit LSee Keyboard Layout",
+	"version": "0.1",
+	"app": {
+		"background": {
+			"scripts": ["js/background.js"]
+		}
+	},
+	"permissions": [
+		"usb",
+		{"usbDevices": [
+			{
+				// 16c0:03e8
+				"vendorId": 5824,
+				"productId": 1000
+			}
+			]
+		}
+	]
+}
