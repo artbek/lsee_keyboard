@@ -1,11 +1,11 @@
 USB Keyboard Build
 ==================
 
-<a href="http://lseeblog.co.uk/post/8">
+<a href="http://lseeblog.co.uk/post/1008">
   <img src="https://github.com/artbek/lsee_keyboard/blob/master/photos/final_product_top.jpg" />
 </a>
 
-<a href="http://lseeblog.co.uk/post/7">
+<a href="http://lseeblog.co.uk/post/1007">
   <img src="https://github.com/artbek/lsee_keyboard/blob/master/design_files/circuit_diagram__large.png" />
 </a>
 
