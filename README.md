@@ -1,8 +1,13 @@
 USB Keyboard Build
 ==================
 
-<img src="https://github.com/artbek/lsee_keyboard/blob/master/photos/final_product_top.jpg" />
+<img src="https://github.com/artbek/lsee_keyboard/blob/master/photos/final_product_top__large.jpg" />
+<img src="https://github.com/artbek/lsee_keyboard/blob/master/photos/final_product_angle__large.jpg" />
+<img src="https://github.com/artbek/lsee_keyboard/blob/master/photos/fully_assembled__large.jpg" />
+<img src="https://github.com/artbek/lsee_keyboard/blob/master/photos/mixed_materials__large.jpg" />
 
+<img src="https://github.com/artbek/lsee_keyboard/blob/master/photos/led_back__large.jpg" />
+<img src="https://github.com/artbek/lsee_keyboard/blob/master/photos/circuit_top__large.jpg" />
 <img src="https://github.com/artbek/lsee_keyboard/blob/master/design_files/circuit_diagram__large.png" />
 
 /design_files
